@@ -24,4 +24,4 @@ A scalable and secure payment gateway service built with Node.js, Express, and M
 
 1. Clone the repository
    ```sh
-   git clone https://github.com/yourusername/payment-gateway.git
+   git clone https://github.com/paulsp01/new_payment_gateway_service.git
