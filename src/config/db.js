@@ -2,12 +2,19 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    const mongoURI = process.env.MONGO_URI;
+    if (!mongoURI) {
+      throw new Error("MONGO_URI environment variable is not set.");
+    }
+
+    // Log the MongoDB URI for debugging purposes
+    console.log("Connecting to MongoDB with URI:", mongoURI);
+
+    await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
     });
+
     console.log("MongoDB connected");
   } catch (error) {
     console.error("MongoDB connection error:", error);
