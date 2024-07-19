@@ -16,7 +16,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/payments", paymentRoutes);
 app.use("/refunds", refundRoutes);
 
-// Error Handling Middleware
+
 app.use(errorHandler);
 
 module.exports = app;
