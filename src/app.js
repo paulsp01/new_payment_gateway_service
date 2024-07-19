@@ -16,7 +16,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Routes
 app.use("/payments", paymentRoutes);
 app.use("/refunds", refundRoutes);
-app.use(authRoutes);
+app.use("/auth",authRoutes);
 
 
 app.use(errorHandler);
