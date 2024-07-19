@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User"); 
-const { secretKey } = require("../config"); 
 
-/
+
+
 const loginUser = async (req, res, next) => {
   const { username, password } = req.body;
 
@@ -16,7 +16,7 @@ const loginUser = async (req, res, next) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ userId: user._id }, secretKey, {
+    const token = jwt.sign({ userId: user._id }, {
       expiresIn: "1h",
     });
 
