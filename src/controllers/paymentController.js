@@ -1,55 +1,55 @@
 const Payment = require("../models/Payment");
 
-// Create a payment
-exports.createPayment = async (req, res, next) => {
+exports.createPayment = async (req, res) => {
   try {
-    const { userId, amount, currency, paymentMethod } = req.body;
-    const payment = new Payment({
-      userId,
-      amount,
-      currency,
-      paymentMethod,
-      status: "pending",
-    });
+    const payment = new Payment(req.body);
     await payment.save();
-    res.status(201).json(payment);
+    res.status(201).send(payment);
   } catch (error) {
-    next(error);
+    res.status(400).send(error);
   }
 };
 
-// Process a payment
-exports.processPayment = async (req, res, next) => {
+exports.processPayment = async (req, res) => {
   try {
-    const paymentId = req.params.id;
-    const payment = await Payment.findById(paymentId);
-
+    const payment = await Payment.findById(req.params.id);
     if (!payment) {
-      return res.status(404).json({ message: "Payment not found" });
+      return res.status(404).send({ error: "Payment not found" });
     }
-
-    // Simulate payment processing
-    payment.status = "processed";
+    payment.status = req.body.status;
     await payment.save();
-
-    res.status(200).json(payment);
+    res.send(payment);
   } catch (error) {
-    next(error);
+    res.status(400).send(error);
   }
 };
 
-// Retrieve payment status
-exports.getPaymentStatus = async (req, res, next) => {
+exports.getPaymentStatus = async (req, res) => {
   try {
-    const paymentId = req.params.id;
-    const payment = await Payment.findById(paymentId);
-
+    const payment = await Payment.findById(req.params.id);
     if (!payment) {
-      return res.status(404).json({ message: "Payment not found" });
+      return res.status(404).send({ error: "Payment not found" });
     }
-
-    res.status(200).json(payment);
+    res.send(payment);
   } catch (error) {
-    next(error);
+    res.status(400).send(error);
+  }
+};
+
+exports.handleRefund = async (req, res) => {
+  try {
+    const payment = await Payment.findById(req.params.id);
+    if (!payment) {
+      return res.status(404).send({ error: "Payment not found" });
+    }
+    payment.refund = {
+      amount: req.body.amount,
+      reason: req.body.reason,
+      date: new Date(),
+    };
+    await payment.save();
+    res.send(payment);
+  } catch (error) {
+    res.status(400).send(error);
   }
 };

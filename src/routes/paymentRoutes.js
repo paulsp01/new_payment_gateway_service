@@ -1,20 +1,10 @@
 const express = require("express");
-const {
-  createPayment,
-  processPayment,
-  getPaymentStatus,
-} = require("../controllers/paymentController");
-const auth = require("../middleware/auth");
-
 const router = express.Router();
+const paymentController = require("../controllers/paymentController");
 
-
-router.post("/", auth, createPayment);
-
-
-router.post("/:id/process", auth, processPayment);
-
-
-router.get("/:id", auth, getPaymentStatus);
+router.post("/payments", paymentController.createPayment);
+router.post("/payments/:id/process", paymentController.processPayment);
+router.get("/payments/:id", paymentController.getPaymentStatus);
+router.post("/payments/:id/refund", paymentController.handleRefund);
 
 module.exports = router;
