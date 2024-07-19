@@ -20,7 +20,7 @@ A scalable and secure payment gateway service built with Node.js, Express, and M
 - Node.js
 - MongoDB
 
-### Installation
+
 
 1. Clone the repository
    ```sh
