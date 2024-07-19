@@ -30,23 +30,14 @@ A scalable and secure payment gateway service built with Node.js, Express, and M
 **Deployment:** [Render.com](https://new-payment-gateway-service.onrender.com)
 
 API DOCUMENTATION:
-POST /login
-Description: Authenticates a user and returns a JWT token.
+*crete payment*
+POST http://localhost:5000/payments
 
+*Processing a payment.*
+POST http://localhost:5000/payments/:id/process
 
-Payments
-POST /payments
-Description: Creates a new payment. Requires authentication.
-POST /payments/:id/process
-Description: Processes a payment based on payment ID. Requires authentication.
-GET /payments/:id
-Description: Retrieves the status of a payment based on payment ID. Requires authentication.
+*Retrieving payment status.*
+GET http://localhost:5000/payments/:id
 
-
-Refunds
-POST /refunds
-Description: Initiates a refund. Requires authentication.
-POST /refunds/:id/process
-Description: Processes a refund based on refund ID. Requires authentication.
-GET /refunds/:id
-Description: Retrieves the status of a refund based on refund ID. Requires authentication.
+*Handling refunds.*
+POST http://localhost:5000/payments/:id/refund
