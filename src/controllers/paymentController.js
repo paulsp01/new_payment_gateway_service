@@ -1,4 +1,5 @@
 const Payment = require("../models/Payment");
+const Refund = require("../models/Refund");
 
 exports.createPayment = async (req, res) => {
   try {
@@ -6,7 +7,7 @@ exports.createPayment = async (req, res) => {
     await payment.save();
     res.status(201).send(payment);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send({ error: error.message });
   }
 };
 
@@ -20,7 +21,7 @@ exports.processPayment = async (req, res) => {
     await payment.save();
     res.send(payment);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send({ error: error.message });
   }
 };
 
@@ -32,7 +33,7 @@ exports.getPaymentStatus = async (req, res) => {
     }
     res.send(payment);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send({ error: error.message });
   }
 };
 
@@ -42,14 +43,33 @@ exports.handleRefund = async (req, res) => {
     if (!payment) {
       return res.status(404).send({ error: "Payment not found" });
     }
-    payment.refund = {
+
+    // Log the payment document
+    console.log("Payment document:", payment);
+
+    // Create a new refund document
+    const refund = new Refund({
       amount: req.body.amount,
       reason: req.body.reason,
-      date: new Date(),
-    };
+      payment_id: payment._id, // Link to the payment
+    });
+
+    await refund.save();
+
+    // Log the refund document
+    console.log("Refund document:", refund);
+
+    // Update the payment document to reference the refund
+    payment.refund = refund._id;
+
+    // Log the updated payment document before saving
+    console.log("Updated payment document:", payment);
+
     await payment.save();
-    res.send(payment);
+
+    res.send({ payment, refund });
   } catch (error) {
-    res.status(400).send(error);
+    console.error("Error occurred:", error); // Log the error for debugging
+    res.status(400).send({ error: error.message });
   }
 };

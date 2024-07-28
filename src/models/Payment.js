@@ -8,11 +8,7 @@ const paymentSchema = new mongoose.Schema(
     description: { type: String },
     customer_id: { type: String, required: true },
     status: { type: String, default: "pending" },
-    refund: {
-      amount: Number,
-      reason: String,
-      date: Date,
-    },
+    refund: { type: mongoose.Schema.Types.ObjectId, ref: "Refund" }, // Reference to the refund document
   },
   { timestamps: true }
 );
