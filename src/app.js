@@ -1,5 +1,6 @@
 const express = require("express");
 const swaggerUi = require("swagger-ui-express");
+const swaggerJsdoc=require("swagger-jsdoc");
 require("./config/db");
 
 const paymentRoutes = require("./routes/paymentRoutes");
