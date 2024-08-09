@@ -15,3 +15,55 @@ const paymentSchema = new mongoose.Schema(
 
 const Payment = mongoose.model("Payment", paymentSchema);
 module.exports = Payment;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function (){
+ try{
+  const response=fetch(url);
+  if(!response){
+    console.error("error");
+  }
+  const data=await Response.json();
+  return data;
+}catch{
+
+}
+}
+
+
+const http=require('http');
+
+const a=http.createserver(req,res)=>{
+  res.status(200).send("hello world");
+}
+
+
+a.listen(2000,()=>{
+  console.log("server is connected");
+});
+
+
+
+
+
+
+
+
+
